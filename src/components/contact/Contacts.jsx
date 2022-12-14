@@ -3,7 +3,15 @@ import { AiFillDelete } from "react-icons/ai";
 import { RiEditBoxLine } from "react-icons/ri";
 import { iconStyles } from "../contact/ContactsStyles";
 
-const Contacts = ({ contacts, setContacts }) => {
+const Contacts = ({ contacts, setContacts, setForm }) => {
+  const deleteContact = (id) => {
+    setContacts(contacts.filter((contact) => contact.id !== id));
+  };
+
+  const editContact = (userName, phoneNumber, gender, id) => {
+    setForm({ userName, phoneNumber, gender, id });
+  };
+
   return (
     <div>
       <div>
@@ -18,8 +26,8 @@ const Contacts = ({ contacts, setContacts }) => {
             <th>DELETE</th>
             <th>EDİT</th>
           </tr>
-          {contacts?.map((contact, id) => {
-            const { userName, phoneNumber, gender } = contact;
+          {contacts?.map((contact) => {
+            const { userName, phoneNumber, gender, id } = contact;
             return (
               <tr key={id}>
                 <td>{userName}</td>
@@ -28,13 +36,15 @@ const Contacts = ({ contacts, setContacts }) => {
                 <td>
                   <AiFillDelete
                     style={iconStyles}
-                    // onClick={() => deleteContact(phoneNumber)}
+                    onClick={() => deleteContact(id)}
                   />
                 </td>
                 <td>
                   <RiEditBoxLine
                     style={iconStyles}
-                    // onClick={() => editContact(userName, phoneNumber, gender)}
+                    onClick={() =>
+                      editContact(userName, phoneNumber, gender, id)
+                    }
                   />
                 </td>
               </tr>

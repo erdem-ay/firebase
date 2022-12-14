@@ -9,14 +9,22 @@ import {
 import { RiContactsFill } from "react-icons/ri";
 import { FiPhoneCall } from "react-icons/fi";
 
-const AddContact = ({ form, setForm, setContacts, contacts }) => {
+const AddContact = ({
+  form,
+  setForm,
+  setContacts,
+  contacts,
+  initialValuesForm,
+}) => {
   const changeForm = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const id = new Date().getTime();
+    setForm({ ...form, [e.target.name]: e.target.value, id: id });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setContacts([...contacts, form]);
+    setForm(initialValuesForm);
   };
 
   console.log(contacts);

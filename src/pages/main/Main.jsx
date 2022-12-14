@@ -8,6 +8,7 @@ const initialValuesForm = {
   phoneNumber: "",
   userName: "",
   gender: "",
+  id: "",
 };
 
 const Main = () => {
@@ -21,8 +22,9 @@ const Main = () => {
         setForm={setForm}
         contacts={contacts}
         setContacts={setContacts}
+        initialValuesForm={initialValuesForm}
       />
-      <Contacts contacts={contacts} setContacts={setContacts} />
+      <Contacts contacts={contacts} setContacts={setContacts} setForm={setForm} />
     </MainContainer>
   );
 };
