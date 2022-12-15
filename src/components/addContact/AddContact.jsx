@@ -8,6 +8,7 @@ import {
 } from "./AddContactStyles";
 import { RiContactsFill } from "react-icons/ri";
 import { FiPhoneCall } from "react-icons/fi";
+import { updateDataToFirebase, writeUserData } from "../../utils/firebase";
 
 const AddContact = ({
   form,
@@ -15,6 +16,8 @@ const AddContact = ({
   setContacts,
   contacts,
   initialValuesForm,
+  update,
+  setUpdate,
 }) => {
   const changeForm = (e) => {
     const id = new Date().getTime();
@@ -23,8 +26,18 @@ const AddContact = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setContacts([...contacts, form]);
-    setForm(initialValuesForm);
+    if (update) {
+      setContacts([...contacts, form]);
+      setForm(initialValuesForm);
+      writeUserData(form.userName, form.phoneNumber, form.gender, form.id);
+    } else {
+      updateDataToFirebase(
+        form.userName,
+        form.phoneNumber,
+        form.gender,
+        form.id
+      );
+    }
   };
 
   console.log(contacts);

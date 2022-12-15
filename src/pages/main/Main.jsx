@@ -1,8 +1,9 @@
 import "./MainStyles";
 import AddContact from "../../components/addContact/AddContact";
 import Contacts from "../../components/contact/Contacts";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MainContainer } from "./MainStyles";
+import { getDataFromFirebase } from "../../utils/firebase";
 
 const initialValuesForm = {
   phoneNumber: "",
@@ -14,6 +15,11 @@ const initialValuesForm = {
 const Main = () => {
   const [form, setForm] = useState(initialValuesForm);
   const [contacts, setContacts] = useState([]);
+  const [update, setUpdate] = useState(true);
+
+  useEffect(() => {
+    getDataFromFirebase(setContacts);
+  }, []);
 
   return (
     <MainContainer>
@@ -23,8 +29,16 @@ const Main = () => {
         contacts={contacts}
         setContacts={setContacts}
         initialValuesForm={initialValuesForm}
+        update={update}
+        setUpdate={setUpdate}
       />
-      <Contacts contacts={contacts} setContacts={setContacts} setForm={setForm} />
+      <Contacts
+        contacts={contacts}
+        setContacts={setContacts}
+        setForm={setForm}
+        update={update}
+        setUpdate={setUpdate}
+      />
     </MainContainer>
   );
 };

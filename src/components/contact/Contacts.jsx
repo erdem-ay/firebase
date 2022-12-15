@@ -2,14 +2,25 @@ import "./ContactsStyles";
 import { AiFillDelete } from "react-icons/ai";
 import { RiEditBoxLine } from "react-icons/ri";
 import { iconStyles } from "../contact/ContactsStyles";
+import {
+  deleteDataFromFirebase,
+  updateDataToFirebase,
+} from "../../utils/firebase";
 
-const Contacts = ({ contacts, setContacts, setForm }) => {
+const Contacts = ({ contacts, setContacts, setForm, update, setUpdate }) => {
   const deleteContact = (id) => {
     setContacts(contacts.filter((contact) => contact.id !== id));
+    deleteDataFromFirebase(id);
   };
 
   const editContact = (userName, phoneNumber, gender, id) => {
-    setForm({ userName, phoneNumber, gender, id });
+    setUpdate(false)
+    setForm({
+      userName: userName,
+      phoneNumber: phoneNumber,
+      gender: gender,
+      id: id,
+    });
   };
 
   return (
